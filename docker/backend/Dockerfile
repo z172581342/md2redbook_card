@@ -12,9 +12,7 @@ ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright \
 COPY backend/requirements.txt .
 
 # 一次性安装所有依赖
-RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list \
-    && sed -i 's/security.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list \
-    && apt-get update \
+RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         libglib2.0-0 \
         libnss3 \
@@ -39,6 +37,7 @@ RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list \
         libasound2 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
+    && pip install --no-cache-dir werkzeug==2.0.3 flask==2.0.1 \
     && pip install --no-cache-dir -r requirements.txt \
     && playwright install chromium
 
