@@ -19,6 +19,8 @@ services:
       dockerfile: docker/backend/Dockerfile
     ports:
       - "5556:5556"
+    environment:
+      - FRONTEND_URL=http://frontend:80  # Docker 网络中使用服务名访问
     restart: always
     volumes:
-      - ./temp:/app/temp 
+      - ./temp:/app/temp

@@ -8,10 +8,11 @@ WORKDIR /app
 COPY backend/requirements.txt .
 
 # 安装依赖
+RUN pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple \
+    && pip config set global.trusted-host pypi.tuna.tsinghua.edu.cn
 RUN pip install --no-cache-dir -r requirements.txt
 
 # 安装playwright相关依赖
-RUN pip install playwright
 RUN playwright install chromium
 RUN apt-get update && apt-get install -y \
     libglib2.0-0 \

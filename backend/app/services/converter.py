@@ -6,13 +6,14 @@ import os
 import urllib.parse
 
 class FrontendScreenshotService:
-    def __init__(self, frontend_url="http://localhost:5173"):
+    def __init__(self, frontend_url=None):
         """初始化服务
         
         Args:
             frontend_url: 前端应用的URL地址
         """
-        self.frontend_url = frontend_url
+        # 优先使用传入的URL，否则使用环境变量，最后使用默认值
+        self.frontend_url = frontend_url or os.getenv('FRONTEND_URL', 'http://localhost:5173')
         self.browser = None
         self.context = None
         
