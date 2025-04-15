@@ -17,18 +17,18 @@ curl -X POST \
       "cardSize": {"width": 500, "height": 650}
     }
   }' \
-  http://localhost:5556/api/convert | tee response.json
+  http://localhost:5556/api/convert | tee temp/response.json
 
 # 检查是否成功
-if grep -q '"success":true' response.json; then
+if grep -q '"success":true' temp/response.json; then
   echo -e "\nAPI调用成功!"
   
   # 提取图片数据并保存
   echo -e "正在提取图片数据..."
-  grep -o '"image":"[^"]*"' response.json | sed 's/"image":"//;s/"$//' > image_base64.txt
-  cat image_base64.txt | base64 -d > output.png
-  echo "图片已保存为 output.png"
+  grep -o '"image":"[^"]*"' temp/response.json | sed 's/"image":"//;s/"$//' > temp/image_base64.txt
+  cat temp/image_base64.txt | base64 -d > temp/output.png
+  echo "图片已保存为 temp/output.png"
 else
   echo -e "\nAPI调用失败，内容如下:"
-  cat response.json
+  cat temp/response.json
 fi
