@@ -34,7 +34,7 @@ import container from 'markdown-it-container'
 import footnote from 'markdown-it-footnote'
 import abbr from 'markdown-it-abbr'
 import ins from 'markdown-it-ins'
-import katex from 'markdown-it-katex'
+import katex from '@iktakahiro/markdown-it-katex'
 import 'katex/dist/katex.min.css'
 
 const props = defineProps({

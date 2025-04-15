@@ -167,7 +167,7 @@ const handleFontSizeChange = (fontSize) => {
               :content="markdownContent" 
               :theme="currentTheme" 
               :cardSize="effectiveCardSize" 
-              ref="cardRef" 
+              ref="cardRef"
             />
           </div>
         </div>
@@ -194,7 +194,6 @@ const handleFontSizeChange = (fontSize) => {
 
 h1 {
   text-align: center;
-  color: #333;
   margin-bottom: 30px;
 }
 
@@ -236,23 +235,23 @@ h1 {
 .settings-panel {
   flex: 1;
   min-width: 300px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color, #ddd);
   border-radius: 8px;
-  background-color: #f9f9f9;
+  background-color: var(--panel-bg-color, #f9f9f9);
   overflow: hidden;
 }
 
 .settings-header {
-  background-color: #f0f0f0;
+  background-color: var(--header-bg-color, #f0f0f0);
   padding: 10px 15px;
   font-weight: bold;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--border-color, #ddd);
 }
 
 .editor-section, .preview-section {
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color, #ddd);
   border-radius: 8px;
-  background-color: #f9f9f9;
+  background-color: var(--panel-bg-color, #f9f9f9);
   overflow: hidden;
   height: 100%;
   display: flex;
@@ -260,10 +259,10 @@ h1 {
 }
 
 .section-header {
-  background-color: #f0f0f0;
+  background-color: var(--header-bg-color, #f0f0f0);
   padding: 10px 15px;
   font-weight: bold;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--border-color, #ddd);
   flex-shrink: 0;
 }
 
@@ -277,7 +276,8 @@ h1 {
   resize: none;
   font-size: 14px;
   line-height: 1.6;
-  background-color: #fff;
+  background-color: var(--input-bg-color, #fff);
+  color: var(--text-color, #333);
   flex: 1;
 }
 
@@ -288,7 +288,7 @@ h1 {
 .card-container {
   margin: 20px auto;
   overflow: auto;
-  background-color: #fff;
+  background-color: var(--card-bg-color, #fff);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   max-width: 100%;
 }
@@ -297,6 +297,26 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+:root {
+  --border-color: #ddd;
+  --panel-bg-color: #f9f9f9;
+  --header-bg-color: #f0f0f0;
+  --input-bg-color: #fff;
+  --card-bg-color: #fff;
+  --text-color: #333;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --border-color: #444;
+    --panel-bg-color: #333;
+    --header-bg-color: #2a2a2a;
+    --input-bg-color: #222;
+    --card-bg-color: #2a2a2a;
+    --text-color: #eee;
+  }
 }
 
 @media (max-width: 1200px) {
