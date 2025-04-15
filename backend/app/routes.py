@@ -18,7 +18,7 @@ async def convert_markdown():
         theme = style_config.get('theme', 'default')
         font_size = style_config.get('fontSize', 16)
         width = style_config.get('width', 440)
-        height = style_config.get('height', 586)        
+        height = style_config.get('height', 1000)        
         # 调用转换服务
         image_data = await frontend_service.capture_markdown_preview(
             markdown_text,

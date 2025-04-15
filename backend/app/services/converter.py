@@ -99,10 +99,20 @@ class FrontendScreenshotService:
                     if width_input:
                         width = max(200, min(1000, width))
                         await width_input.fill(str(width))
+                        # 按下Tab键触发失焦事件
+                        await width_input.press("Tab")
                     
                     if height_input:
                         height = max(200, min(1000, height))
                         await height_input.fill(str(height))
+                        # 按下Enter键确认输入
+                        await height_input.press("Enter")
+                    
+                    # 点击页面其他区域确保失焦事件触发
+                    await page.click('.theme-manager')
+                    
+                    # 等待一小段时间确保尺寸更新已应用
+                    await page.wait_for_timeout(1000)
                         
                 except Exception as e:
                     print(f"设置卡片尺寸失败: {str(e)}")
