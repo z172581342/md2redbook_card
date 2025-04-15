@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/frontend/Dockerfile
+    ports:
+      - "8080:80"
+    restart: always
+    depends_on:
+      - backend
+    volumes:
+      - ./temp:/app/temp
+
+  backend:
+    build:
+      context: .
+      dockerfile: docker/backend/Dockerfile
+    ports:
+      - "5556:5556"
+    restart: always
+    volumes:
+      - ./temp:/app/temp 

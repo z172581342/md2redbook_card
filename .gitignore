@@ -66,3 +66,9 @@ temp/
 output.png
 image_base64.txt
 response.json
+
+# 项目重构后的目录结构
+/temp/*
+!temp/.gitkeep
+node_modules/
+.DS_Store
