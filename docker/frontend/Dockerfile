@@ -34,4 +34,6 @@ EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 
 # 添加 vite 相关配置文件
-COPY frontend/vite.config.* ./          # vite 配置文件 
+COPY frontend/.env* ./
+COPY frontend/tsconfig*.json ./
+COPY frontend/vite.config.* ./
