@@ -4,7 +4,7 @@ from .services.converter import FrontendScreenshotService
 
 main = Blueprint('main', __name__)
 # 初始化服务，根据实际前端地址配置
-frontend_service = FrontendScreenshotService(frontend_url="http://localhost:5173")
+frontend_service = FrontendScreenshotService(frontend_url="http://localhost:2333")
 
 @main.route('/api/convert', methods=['POST'])
 async def convert_markdown():

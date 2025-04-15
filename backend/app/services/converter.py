@@ -13,7 +13,7 @@ class FrontendScreenshotService:
             frontend_url: 前端应用的URL地址
         """
         # 优先使用传入的URL，否则使用环境变量，最后使用默认值
-        self.frontend_url = frontend_url or os.getenv('FRONTEND_URL', 'http://localhost:5173')
+        self.frontend_url = frontend_url or os.getenv('FRONTEND_URL', 'http://localhost:2333')
         self.browser = None
         self.context = None
         
