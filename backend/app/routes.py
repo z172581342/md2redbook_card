@@ -1,3 +1,4 @@
+import os
 from flask import Blueprint, request, jsonify
 import asyncio
 from .services.converter import FrontendScreenshotService
