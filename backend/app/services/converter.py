@@ -29,10 +29,22 @@ class FrontendScreenshotService:
             
             # 添加适用于所有页面的初始化脚本
             await self.context.add_init_script("""
-                // 设置默认字体为中文优先
+                // 设置默认字体为中文优先，并支持emoji
                 if (document && document.documentElement) {
                     document.documentElement.style.fontFamily = 
-                        "PingFang SC, Microsoft YaHei, Hiragino Sans GB, sans-serif";
+                        "'Noto Color Emoji', 'Segoe UI Emoji', 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB', sans-serif";
+                    // 添加针对emoji的特殊样式
+                    const style = document.createElement('style');
+                    style.textContent = `
+                        * {
+                            font-family: 'Noto Color Emoji', 'Segoe UI Emoji', 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB', sans-serif;
+                        }
+                        span.emoji {
+                            font-family: 'Noto Color Emoji', 'Segoe UI Emoji', sans-serif !important;
+                            font-style: normal !important;
+                        }
+                    `;
+                    document.head.appendChild(style);
                 }
             """)
             

@@ -2,7 +2,7 @@
 
 # 测试健康检查端点
 echo "测试健康检查端点..."
-curl -s http://127.0.0.1:5556/api/health
+curl -s http://175.24.139.203:5556/api/health
 
 # 测试Markdown转换端点
 echo -e "\n测试Markdown转换端点..."
@@ -18,7 +18,7 @@ curl -X POST \
       "height":1000
     }
   }' \
-  http://127.0.0.1:5556/api/convert | tee ../temp/response.json
+  http://175.24.139.203:5556/api/convert | tee ../temp/response.json
 
 # 检查是否成功
 if grep -q '"success":true' ../temp/response.json; then

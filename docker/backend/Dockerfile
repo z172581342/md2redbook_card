@@ -59,6 +59,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     fonts-wqy-microhei \
     fonts-wqy-zenhei \
     fonts-noto-cjk \
+    fonts-noto-color-emoji \
     && rm -rf /var/lib/apt/lists/* \
     && fc-cache -fv
 
