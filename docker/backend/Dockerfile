@@ -54,6 +54,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libasound2 \
     && rm -rf /var/lib/apt/lists/*
 
+# 安装中文字体支持
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    fonts-wqy-microhei \
+    fonts-wqy-zenhei \
+    fonts-noto-cjk \
+    && rm -rf /var/lib/apt/lists/* \
+    && fc-cache -fv
+
 # 安装Python依赖
 RUN pip install --no-cache-dir werkzeug==2.0.3 flask==2.0.1
 RUN pip install --no-cache-dir -r requirements.txt

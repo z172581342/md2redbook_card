@@ -13,6 +13,8 @@ async def convert_markdown():
         # 获取请求数据
         data = request.json
         markdown_text = data.get('markdown', '')
+        if isinstance(markdown_text, str):
+            markdown_text = markdown_text.encode('utf-8').decode('utf-8')
         style_config = data.get('style', {})
         
         # 样式配置参数

@@ -2,15 +2,15 @@
 
 # 测试健康检查端点
 echo "测试健康检查端点..."
-curl -s http://175.24.139.203:5556/api/health
+curl -s http://127.0.0.1:5556/api/health
 
 # 测试Markdown转换端点
 echo -e "\n测试Markdown转换端点..."
 curl -X POST \
-  -H "Content-Type: application/json" \
+  -H "Content-Type: application/json; charset=utf-8" \
   --max-time 600 \
   -d '{
-    "markdown": "# MD2Card\n\n> MD2Card 是一个 markdown 转知识卡片工具，可以让你用 Markdown 制作优雅的图文海报。 🌟\n\n![](https://picsum.photos/600/300)\n\n\n## 它的主要功能：\n\n1. 将 Markdown 转化为**图文海报**\n2. 多种主题风格任你选择\n3. 长文自动拆分，或者根据 markdown `---` 横线拆分\n4. 可以复制图片到`剪贴板`，或者下载为`PNG`、`SVG`图片\n5. 所见即所得",
+    "markdown": "# 12345MD2Card\n\n> MD2Card 是一个 markdown 转知识卡片工具，可以让你用 Markdown 制作优雅的图文海报。 🌟\n\n![](https://picsum.photos/600/300)\n\n\n## 它的主要功能：\n\n1. 将 Markdown 转化为**图文海报**\n2. 多种主题风格任你选择\n3. 长文自动拆分，或者根据 markdown `---` 横线拆分\n4. 可以复制图片到`剪贴板`，或者下载为`PNG`、`SVG`图片\n5. 所见即所得",
     "style": {
       "theme": "dark",
       "fontSize": 18,
@@ -18,7 +18,7 @@ curl -X POST \
       "height":1000
     }
   }' \
-  http://175.24.139.203:5556/api/convert | tee ../temp/response.json
+  http://127.0.0.1:5556/api/convert | tee ../temp/response.json
 
 # 检查是否成功
 if grep -q '"success":true' ../temp/response.json; then

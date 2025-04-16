@@ -21,10 +21,43 @@ class FrontendScreenshotService:
         """异步初始化浏览器"""
         if not self.browser:
             p = await async_playwright().start()
+            # 尝试使用有中文字体支持的浏览器
             self.browser = await p.chromium.launch(headless=True)
             self.context = await self.browser.new_context(
                 viewport={'width': 800, 'height': 600}
             )
+            
+            # 添加适用于所有页面的初始化脚本
+            await self.context.add_init_script("""
+                // 设置默认字体为中文优先
+                if (document && document.documentElement) {
+                    document.documentElement.style.fontFamily = 
+                        "PingFang SC, Microsoft YaHei, Hiragino Sans GB, sans-serif";
+                }
+            """)
+            
+            # 添加markdown-it渲染配置修改脚本
+            await self.context.add_init_script("""
+                // 在全局window对象上添加一个标记，表示需要使用中文字体
+                window.USE_CHINESE_FONT = true;
+                
+                // 监听可能的markdown-it实例创建
+                const originalRender = window.markdownit;
+                if (originalRender) {
+                    window.markdownit = function(...args) {
+                        const md = originalRender.apply(this, args);
+                        // 修改渲染器的字体配置
+                        if (md && md.renderer) {
+                            const originalRenderToken = md.renderer.renderToken;
+                            md.renderer.renderToken = function(...args) {
+                                // 尝试添加中文字体
+                                return originalRenderToken.apply(this, args);
+                            };
+                        }
+                        return md;
+                    };
+                }
+            """);
 
     async def close(self):
         """关闭浏览器"""
@@ -46,6 +79,7 @@ class FrontendScreenshotService:
         Returns:
             image_base64: Base64编码的图片数据
         """
+        
         await self.initialize()
         
         try:
@@ -63,8 +97,17 @@ class FrontendScreenshotService:
                 await page.wait_for_selector('.markdown-editor', state='visible')
                 await page.wait_for_selector('.card-container', state='visible')
                 
-                # 1. 输入Markdown内容
-                await page.fill('.markdown-editor', markdown_text)
+                # 1. 使用JavaScript设置Markdown内容，解决编码问题
+                js_code = f"""
+                   const editor = document.querySelector('.markdown-editor');
+                   if (editor) {{
+                       editor.value = {repr(markdown_text)};
+                       // 触发input事件以确保内容更新
+                       editor.dispatchEvent(new Event('input', {{ bubbles: true }}));
+                   }}
+                """
+                
+                await page.evaluate(js_code)
                 
                 # 2. 设置主题 - 这里需要根据前端ThemeManager组件的实际操作方式调整
                 # 根据选择的主题设置对应的选项
